@@ -1,37 +1,52 @@
 
 <!DOCTYPE html>
 <html>
-<head><title>T2 Checker Log API</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>T2 Checker Log API</title>
+</head>
 <body>
 <h2>T2 Checker Log - API Server</h2>
 <p>API is running.</p>
-<button onclick="testAPI()">点击测试 API</button>
-<pre id="result"></pre>
+<button id="testBtn">点击测试 API</button>
+<h3>返回结果：</h3>
+<pre id="result">等待测试...</pre>
+
 <script>
-async function testAPI() {
+document.getElementById('testBtn').addEventListener('click', function() {
   document.getElementById('result').textContent = '发送中...';
-  try {
-    const res = await fetch('/api/log', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        user_alias: 'kris_test',
-        action_type: 'test_connection',
-        client_timestamp: new Date().toISOString(),
-        details: {
-          message: '测试数据库连接',
-          booking_id: 'TEST-001',
-          issue_type: 'missing_carp',
-          result: 'eligible'
-        }
-      })
+
+  var data = {
+    user_alias: 'kris_test',
+    action_type: 'test_connection',
+    client_timestamp: new Date().toISOString(),
+    details: {
+      message: 'test database connection',
+      booking_id: 'TEST-001',
+      issue_type: 'missing_carp',
+      result: 'eligible'
+    }
+  };
+
+  fetch('/api/log', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(function(res) {
+    var info = 'Status: ' + res.status + '\n';
+    info += 'Content-Type: ' + res.headers.get('content-type') + '\n\n';
+    return res.text().then(function(text) {
+      return info + 'Body:\n' + text;
     });
-    const data = await res.json();
-    document.getElementById('result').textContent = JSON.stringify(data, null, 2);
-  } catch (e) {
-    document.getElementById('result').textContent = '❌ 错误: ' + e.message;
-  }
-}
+  })
+  .then(function(output) {
+    document.getElementById('result').textContent = output;
+  })
+  .catch(function(err) {
+    document.getElementById('result').textContent = 'Request failed: ' + err.message;
+  });
+});
 </script>
 </body>
 </html>
