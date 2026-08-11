@@ -1,0 +1,14 @@
+[
+  {
+    "user_alias": "kris_test",
+    "action_type": "test_connection",
+    "client_timestamp": "2026-08-11T07:02:59.715Z",
+    "details": {
+      "message": "test database connection",
+      "booking_id": "TEST-001",
+      "issue_type": "missing_carp",
+      "result": "eligible"
+    },
+    "server_timestamp": "2026-08-11T07:03:00.080Z"
+  }
+]
