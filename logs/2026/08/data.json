@@ -125,5 +125,17 @@
       "duration_ms": 3052
     },
     "server_timestamp": "2026-08-11T07:39:09.980Z"
+  },
+  {
+    "user_alias": "unknown",
+    "action_type": "check_complete",
+    "client_timestamp": "2026-08-11T08:08:51.569Z",
+    "details": {
+      "booking_id": "AL0-RHRTWKYMNJDYW",
+      "issue_type": "missing_carp",
+      "result": "REJECT",
+      "steps_count": 6
+    },
+    "server_timestamp": "2026-08-11T08:08:52.979Z"
   }
 ]
