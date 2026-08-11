@@ -1,5 +1,5 @@
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -23,19 +23,17 @@ export default async function handler(req, res) {
 
     logEntry.server_timestamp = new Date().toISOString();
 
-    // 按月份存储
     const now = new Date();
-    const fileName = `logs/${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/data.json`;
+    const fileName = 'logs/' + now.getFullYear() + '/' + String(now.getMonth() + 1).padStart(2, '0') + '/data.json';
 
-    // 读取已有数据
     let existingData = [];
     let fileSha = null;
 
     const getRes = await fetch(
-      `https://api.github.com/repos/${GITHUB_REPO}/contents/${fileName}?ref=main`,
+      'https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + fileName + '?ref=main',
       {
         headers: {
-          'Authorization': `token ${GITHUB_TOKEN}`,
+          'Authorization': 'token ' + GITHUB_TOKEN,
           'Accept': 'application/vnd.github.v3+json'
         }
       }
@@ -49,20 +47,19 @@ export default async function handler(req, res) {
 
     existingData.push(logEntry);
 
-    // 写回 GitHub
     const putBody = {
-      message: `[log] ${logEntry.user_alias} - ${logEntry.action_type}`,
+      message: '[log] ' + logEntry.user_alias + ' - ' + logEntry.action_type,
       content: Buffer.from(JSON.stringify(existingData, null, 2)).toString('base64'),
       branch: 'main'
     };
     if (fileSha) putBody.sha = fileSha;
 
     const putRes = await fetch(
-      `https://api.github.com/repos/${GITHUB_REPO}/contents/${fileName}`,
+      'https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + fileName,
       {
         method: 'PUT',
         headers: {
-          'Authorization': `token ${GITHUB_TOKEN}`,
+          'Authorization': 'token ' + GITHUB_TOKEN,
           'Content-Type': 'application/json',
           'Accept': 'application/vnd.github.v3+json'
         },
@@ -79,5 +76,5 @@ export default async function handler(req, res) {
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
-}
+};
 
