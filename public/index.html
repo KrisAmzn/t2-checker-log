@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html>
+<head><title>T2 Checker Log API</title></head>
+<body>
+<h2>T2 Checker Log - API Server</h2>
+<p>API is running.</p>
+<button onclick="testAPI()">点击测试 API</button>
+<pre id="result"></pre>
+<script>
+async function testAPI() {
+  document.getElementById('result').textContent = '发送中...';
+  try {
+    const res = await fetch('/api/log', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        user_alias: 'kris_test',
+        action_type: 'test_connection',
+        client_timestamp: new Date().toISOString(),
+        details: {
+          message: '测试数据库连接',
+          booking_id: 'TEST-001',
+          issue_type: 'missing_carp',
+          result: 'eligible'
+        }
+      })
+    });
+    const data = await res.json();
+    document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+  } catch (e) {
+    document.getElementById('result').textContent = '❌ 错误: ' + e.message;
+  }
+}
+</script>
+</body>
+</html>
+
