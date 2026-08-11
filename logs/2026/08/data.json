@@ -10,5 +10,14 @@
       "result": "eligible"
     },
     "server_timestamp": "2026-08-11T07:03:00.080Z"
+  },
+  {
+    "user_alias": "unknown",
+    "action_type": "panel_open",
+    "session_id": "sess_1786433904706_55ju1s",
+    "client_timestamp": "2026-08-11T07:38:25.217Z",
+    "page_url": "https://trans-logistics-cn.amazon.com/aglt/appViews/app#/bookingV2/AL0-RHRTWKYMNJDYW",
+    "details": {},
+    "server_timestamp": "2026-08-11T07:38:26.332Z"
   }
 ]
