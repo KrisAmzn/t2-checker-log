@@ -72,5 +72,17 @@
       "duration_ms": 3052
     },
     "server_timestamp": "2026-08-11T07:38:40.909Z"
+  },
+  {
+    "user_alias": "ylliua",
+    "action_type": "check_start",
+    "session_id": "sess_1786433904706_55ju1s",
+    "client_timestamp": "2026-08-11T07:39:06.571Z",
+    "page_url": "https://trans-logistics-cn.amazon.com/aglt/appViews/app#/bookingV2/AL0-RHRTWKYMNJDYW",
+    "details": {
+      "issue_type": "missing_carp",
+      "booking_id": "unknown"
+    },
+    "server_timestamp": "2026-08-11T07:39:06.929Z"
   }
 ]
