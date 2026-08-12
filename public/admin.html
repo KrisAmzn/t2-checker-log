@@ -29,7 +29,6 @@
     .login-box button:hover { background: #e88b00; }
     .login-error { color: #d13212; font-size: 12px; margin-top: 8px; display: none; }
 
-    /* Dashboard */
     .dashboard { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; }
     .dash-header {
       display: flex; justify-content: space-between; align-items: center;
@@ -38,7 +37,6 @@
     .dash-header h1 { font-size: 20px; color: #232f3e; }
     .dash-header .logout { font-size: 12px; color: #666; cursor: pointer; text-decoration: underline; }
 
-    /* 统计卡片 */
     .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
     .stat-card {
       background: #fff; padding: 16px; border-radius: 6px;
@@ -47,7 +45,6 @@
     .stat-card .stat-value { font-size: 24px; font-weight: 700; color: #0066c0; }
     .stat-card .stat-label { font-size: 11px; color: #666; margin-top: 4px; }
 
-    /* 控制栏 */
     .controls {
       display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
       margin-bottom: 16px; padding: 12px; background: #fff;
@@ -67,11 +64,10 @@
     .btn-refresh { background: #6c757d; color: #fff; }
     .btn-refresh:hover { background: #5a6268; }
 
-    /* 数据表格 */
     .table-container { background: #fff; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 12px; }
     th { background: #232f3e; color: #fff; padding: 10px 8px; text-align: left; white-space: nowrap; }
-    td { padding: 8px; border-bottom: 1px solid #f0f0f0; }
+    td { padding: 8px; border-bottom: 1px solid #f0f0f0; white-space: nowrap; }
     tr:hover { background: #f8f9fa; }
     .badge {
       display: inline-block; padding: 2px 6px; border-radius: 3px;
@@ -83,6 +79,7 @@
     .badge-warn { background: #fff3cd; color: #856404; }
     .badge-other { background: #e2e3e5; color: #383d41; }
     .no-data { text-align: center; padding: 40px; color: #999; }
+    .tz-note { font-size: 10px; color: #999; margin-bottom: 8px; }
   </style>
 </head>
 <body>
@@ -132,12 +129,15 @@
     <button class="btn-export" onclick="exportCSV()">导出 CSV</button>
   </div>
 
+  <!-- 时区提示 -->
+  <div class="tz-note">* 所有时间均为中国时间 (UTC+8)</div>
+
   <!-- 数据表格 -->
   <div class="table-container">
     <table id="data-table">
       <thead>
         <tr>
-          <th>日期</th><th>时间(UTC)</th><th>用户</th><th>操作</th>
+          <th>日期</th><th>时间</th><th>用户</th><th>操作</th>
           <th>Booking ID</th><th>Issue Type</th><th>结果</th>
           <th>原因</th><th>Steps</th><th>耗时(ms)</th>
         </tr>
@@ -151,6 +151,25 @@
 <script>
   var adminKey = '';
   var currentData = [];
+
+  // UTC转中国时间
+  function formatChinaTime(isoStr) {
+    if (!isoStr) return { date: '', time: '' };
+    var d = new Date(isoStr);
+    if (isNaN(d.getTime())) return { date: '', time: '' };
+    // 加8小时
+    var china = new Date(d.getTime() + 8 * 60 * 60 * 1000);
+    var year = china.getUTCFullYear();
+    var month = String(china.getUTCMonth() + 1).padStart(2, '0');
+    var day = String(china.getUTCDate()).padStart(2, '0');
+    var hours = String(china.getUTCHours()).padStart(2, '0');
+    var mins = String(china.getUTCMinutes()).padStart(2, '0');
+    var secs = String(china.getUTCSeconds()).padStart(2, '0');
+    return {
+      date: year + '-' + month + '-' + day,
+      time: hours + ':' + mins + ':' + secs
+    };
+  }
 
   // 初始化年份和月份
   (function() {
@@ -229,13 +248,15 @@
     var forceEsc = logs.filter(function(l) { return l.action_type === 'force_escalation'; }).length;
     var errors = logs.filter(function(l) { return l.details && l.details.result === 'error'; }).length;
     var rejects = logs.filter(function(l) { return l.details && l.details.result === 'REJECT'; }).length;
+    var pass = logs.filter(function(l) { return l.details && (l.details.result === 'PASS' || l.details.result === 'eligible'); }).length;
 
     document.getElementById('stats-row').innerHTML =
       statCard(logs.length, '总记录数') +
       statCard(totalChecks, '检查次数') +
       statCard(uniqueUsers, '活跃用户') +
-      statCard(forceEsc, '坚持升级') +
+      statCard(pass, '满足条件') +
       statCard(rejects, '不满足条件') +
+      statCard(forceEsc, '坚持升级') +
       statCard(errors, '错误次数');
   }
 
@@ -258,6 +279,7 @@
     logs.forEach(function(log) {
       var d = log.details || {};
       var ts = log.client_timestamp || '';
+      var chinaTime = formatChinaTime(ts);
       var result = d.result || '';
       var badgeClass = 'badge-other';
       if (result === 'REJECT') badgeClass = 'badge-reject';
@@ -266,8 +288,8 @@
       else if (result === 'needs_review') badgeClass = 'badge-warn';
 
       html += '<tr>' +
-        '<td>' + ts.substring(0, 10) + '</td>' +
-        '<td>' + ts.substring(11, 19) + '</td>' +
+        '<td>' + chinaTime.date + '</td>' +
+        '<td>' + chinaTime.time + '</td>' +
         '<td>' + (log.user_alias || '') + '</td>' +
         '<td>' + (log.action_type || '') + '</td>' +
         '<td>' + (d.booking_id || '') + '</td>' +
