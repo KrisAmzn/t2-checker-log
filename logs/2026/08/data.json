@@ -331,5 +331,17 @@
       "steps_count": 6
     },
     "server_timestamp": "2026-08-12T09:27:52.511Z"
+  },
+  {
+    "user_alias": "unknown",
+    "action_type": "force_escalation",
+    "client_timestamp": "2026-08-12T09:33:29.107Z",
+    "details": {
+      "booking_id": "AL0-UK4TJ2YJVC5SU",
+      "issue_type": "missing_carp",
+      "reason_code": "OOS",
+      "reason_text": "OOS"
+    },
+    "server_timestamp": "2026-08-12T09:33:29.837Z"
   }
 ]
