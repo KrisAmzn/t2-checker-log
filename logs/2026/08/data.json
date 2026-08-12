@@ -240,5 +240,18 @@
       "steps_count": 6
     },
     "server_timestamp": "2026-08-12T06:54:51.139Z"
+  },
+  {
+    "user_alias": "unknown",
+    "action_type": "check",
+    "client_timestamp": "2026-08-12T07:12:05.148Z",
+    "details": {
+      "booking_id": "AL0-QQYSNCCTF5PJK",
+      "issue_type": "unload_delay",
+      "result": "REJECT",
+      "reason": "ISA状态为CLOSED，不是ARRIVAL",
+      "steps_count": 6
+    },
+    "server_timestamp": "2026-08-12T07:12:06.254Z"
   }
 ]
