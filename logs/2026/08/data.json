@@ -343,5 +343,18 @@
       "reason_text": "OOS"
     },
     "server_timestamp": "2026-08-12T09:33:29.837Z"
+  },
+  {
+    "user_alias": "unknown",
+    "action_type": "check",
+    "client_timestamp": "2026-08-12T09:34:27.052Z",
+    "details": {
+      "booking_id": "AL0-UK4TJ2YJVC5SU",
+      "issue_type": "pull_in",
+      "result": "REJECT",
+      "reason": "未超出SLA",
+      "steps_count": 6
+    },
+    "server_timestamp": "2026-08-12T09:34:27.421Z"
   }
 ]
