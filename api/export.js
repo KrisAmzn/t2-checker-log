@@ -71,22 +71,32 @@ export default async function handler(req, res) {
     // CSV格式输出
     if (req.query.format === 'csv') {
       const csvRows = [];
-      csvRows.push('Date,Time_UTC,User,Action,Booking_ID,Issue_Type,Result,Reason,Steps_Count,Duration_ms,Session_ID');
+      csvRows.push('Date_CN,Time_CN,User,Action,Booking_ID,Issue_Type,Result,Reason,Reason_Code,Reason_Text,Steps_Count,Duration_ms,Session_ID');
 
       filtered.forEach(log => {
         const details = log.details || {};
         const ts = log.client_timestamp || '';
-        const date = ts.substring(0, 10);
-        const time = ts.substring(11, 19);
+        let dateCN = '';
+        let timeCN = '';
+        if (ts) {
+          const d = new Date(ts);
+          if (!isNaN(d.getTime())) {
+            const china = new Date(d.getTime() + 8 * 60 * 60 * 1000);
+            dateCN = china.toISOString().substring(0, 10);
+            timeCN = china.toISOString().substring(11, 19);
+          }
+        }
         const row = [
-          date,
-          time,
+          dateCN,
+          timeCN,
           log.user_alias || '',
           log.action_type || '',
           details.booking_id || '',
           details.issue_type || '',
           details.result || '',
           (details.reason || '').replace(/,/g, ';'),
+          details.reason_code || '',
+          (details.reason_text || '').replace(/,/g, ';').replace(/\n/g, ' '),
           details.steps_count || (details.steps ? details.steps.length : ''),
           details.duration_ms || '',
           log.session_id || ''
@@ -97,7 +107,7 @@ export default async function handler(req, res) {
       const csv = csvRows.join('\n');
       res.setHeader('Content-Type', 'text/csv; charset=utf-8');
       res.setHeader('Content-Disposition', `attachment; filename=t2_checker_log_${year}_${month}.csv`);
-      return res.status(200).send('\uFEFF' + csv); // BOM for Excel中文兼容
+      return res.status(200).send('\uFEFF' + csv);
     }
 
     // JSON格式输出
