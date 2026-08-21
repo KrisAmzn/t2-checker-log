@@ -394,5 +394,17 @@
       "steps_count": 6
     },
     "server_timestamp": "2026-08-21T07:04:13.548Z"
+  },
+  {
+    "user_alias": "unknown",
+    "action_type": "force_escalation",
+    "client_timestamp": "2026-08-21T07:04:22.680Z",
+    "details": {
+      "booking_id": "AL0-XBE7UX6KN2GYG",
+      "issue_type": "unload_delay",
+      "reason_code": "OOS_seller_planning",
+      "reason_text": "OOS seller"
+    },
+    "server_timestamp": "2026-08-21T07:04:23.021Z"
   }
 ]
