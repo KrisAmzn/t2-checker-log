@@ -29,7 +29,7 @@
     .login-box button:hover { background: #e88b00; }
     .login-error { color: #d13212; font-size: 12px; margin-top: 8px; display: none; }
 
-    .dashboard { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; }
+    .dashboard { display: none; padding: 20px; max-width: 1400px; margin: 0 auto; }
     .dash-header {
       display: flex; justify-content: space-between; align-items: center;
       margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #e8e8e8;
@@ -37,7 +37,7 @@
     .dash-header h1 { font-size: 20px; color: #232f3e; }
     .dash-header .logout { font-size: 12px; color: #666; cursor: pointer; text-decoration: underline; }
 
-    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
     .stat-card {
       background: #fff; padding: 16px; border-radius: 6px;
       box-shadow: 0 1px 4px rgba(0,0,0,0.08); text-align: center;
@@ -78,6 +78,8 @@
     .badge-error { background: #f5c6cb; color: #721c24; }
     .badge-warn { background: #fff3cd; color: #856404; }
     .badge-other { background: #e2e3e5; color: #383d41; }
+    .badge-oos { background: #ffeeba; color: #856404; }
+    .badge-media { background: #d1ecf1; color: #0c5460; }
     .no-data { text-align: center; padding: 40px; color: #999; }
     .tz-note { font-size: 10px; color: #999; margin-bottom: 8px; }
   </style>
@@ -139,7 +141,8 @@
         <tr>
           <th>日期</th><th>时间</th><th>用户</th><th>操作</th>
           <th>Booking ID</th><th>Issue Type</th><th>结果</th>
-          <th>原因</th><th>Steps</th><th>耗时(ms)</th>
+          <th>原因</th><th>Reason Code</th><th>Reason Text</th>
+          <th>Steps</th><th>耗时(ms)</th>
         </tr>
       </thead>
       <tbody id="table-body"></tbody>
@@ -157,7 +160,6 @@
     if (!isoStr) return { date: '', time: '' };
     var d = new Date(isoStr);
     if (isNaN(d.getTime())) return { date: '', time: '' };
-    // 加8小时
     var china = new Date(d.getTime() + 8 * 60 * 60 * 1000);
     var year = china.getUTCFullYear();
     var month = String(china.getUTCMonth() + 1).padStart(2, '0');
@@ -169,6 +171,19 @@
       date: year + '-' + month + '-' + day,
       time: hours + ':' + mins + ':' + secs
     };
+  }
+
+  // Reason Code 友好显示
+  function formatReasonCode(code) {
+    if (!code) return '';
+    var map = {
+      'OOS_leg_delay': 'OOS-Leg Delay',
+      'OOS_seller_planning': 'OOS-Seller Planning',
+      'media_risk': 'Media/Jeff Esc',
+      'others': 'Others',
+      'manual_confirm': 'Manual Confirm'
+    };
+    return map[code] || code;
   }
 
   // 初始化年份和月份
@@ -246,6 +261,8 @@
     logs.forEach(function(l) { if (l.user_alias && l.user_alias !== 'unknown') users[l.user_alias] = true; });
     var uniqueUsers = Object.keys(users).length;
     var forceEsc = logs.filter(function(l) { return l.action_type === 'force_escalation'; }).length;
+    var oosLeg = logs.filter(function(l) { return l.details && l.details.reason_code === 'OOS_leg_delay'; }).length;
+    var oosSeller = logs.filter(function(l) { return l.details && l.details.reason_code === 'OOS_seller_planning'; }).length;
     var errors = logs.filter(function(l) { return l.details && l.details.result === 'error'; }).length;
     var rejects = logs.filter(function(l) { return l.details && l.details.result === 'REJECT'; }).length;
     var pass = logs.filter(function(l) { return l.details && (l.details.result === 'PASS' || l.details.result === 'eligible'); }).length;
@@ -257,6 +274,8 @@
       statCard(pass, '满足条件') +
       statCard(rejects, '不满足条件') +
       statCard(forceEsc, '坚持升级') +
+      statCard(oosLeg, 'OOS-Leg Delay') +
+      statCard(oosSeller, 'OOS-Seller') +
       statCard(errors, '错误次数');
   }
 
@@ -281,11 +300,20 @@
       var ts = log.client_timestamp || '';
       var chinaTime = formatChinaTime(ts);
       var result = d.result || '';
+      var reasonCode = d.reason_code || '';
       var badgeClass = 'badge-other';
       if (result === 'REJECT') badgeClass = 'badge-reject';
       else if (result === 'error') badgeClass = 'badge-error';
       else if (result === 'PASS' || result === 'eligible') badgeClass = 'badge-pass';
       else if (result === 'needs_review') badgeClass = 'badge-warn';
+
+      var rcBadge = '';
+      if (reasonCode) {
+        var rcClass = 'badge-other';
+        if (reasonCode.indexOf('OOS') === 0) rcClass = 'badge-oos';
+        else if (reasonCode === 'media_risk') rcClass = 'badge-media';
+        rcBadge = '<span class="badge ' + rcClass + '">' + formatReasonCode(reasonCode) + '</span>';
+      }
 
       html += '<tr>' +
         '<td>' + chinaTime.date + '</td>' +
@@ -296,6 +324,8 @@
         '<td>' + (d.issue_type || '') + '</td>' +
         '<td><span class="badge ' + badgeClass + '">' + result + '</span></td>' +
         '<td>' + (d.reason || '') + '</td>' +
+        '<td>' + rcBadge + '</td>' +
+        '<td>' + (d.reason_text || '') + '</td>' +
         '<td>' + (d.steps_count || (d.steps ? d.steps.length : '') || '') + '</td>' +
         '<td>' + (d.duration_ms || '') + '</td>' +
         '</tr>';
