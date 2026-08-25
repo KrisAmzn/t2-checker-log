@@ -704,5 +704,17 @@
       "steps_count": 6
     },
     "server_timestamp": "2026-08-25T09:47:02.341Z"
+  },
+  {
+    "user_alias": "unknown",
+    "action_type": "force_escalation",
+    "client_timestamp": "2026-08-25T09:48:35.839Z",
+    "details": {
+      "booking_id": "AL0-RV2QWHCEMW4QY",
+      "issue_type": "missing_carp",
+      "reason_code": "manual_confirm",
+      "reason_text": "用户已手动确认所有WARN项目"
+    },
+    "server_timestamp": "2026-08-25T09:48:36.195Z"
   }
 ]
