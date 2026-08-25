@@ -679,5 +679,17 @@
       "steps_count": 6
     },
     "server_timestamp": "2026-08-25T09:07:28.909Z"
+  },
+  {
+    "user_alias": "unknown",
+    "action_type": "force_escalation",
+    "client_timestamp": "2026-08-25T09:07:35.389Z",
+    "details": {
+      "booking_id": "AL0-VM5NCJBG4YMWS",
+      "issue_type": "unload_delay",
+      "reason_code": "manual_confirm",
+      "reason_text": "用户已手动确认所有WARN项目"
+    },
+    "server_timestamp": "2026-08-25T09:07:35.672Z"
   }
 ]
