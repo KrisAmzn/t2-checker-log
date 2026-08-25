@@ -666,5 +666,18 @@
       "steps_count": 6
     },
     "server_timestamp": "2026-08-25T08:51:33.756Z"
+  },
+  {
+    "user_alias": "unknown",
+    "action_type": "check",
+    "client_timestamp": "2026-08-25T09:07:27.962Z",
+    "details": {
+      "booking_id": "AL0-VM5NCJBG4YMWS",
+      "issue_type": "unload_delay",
+      "result": "PASS",
+      "reason": "所有条件满足，可以升级 Unload Delay",
+      "steps_count": 6
+    },
+    "server_timestamp": "2026-08-25T09:07:28.909Z"
   }
 ]
