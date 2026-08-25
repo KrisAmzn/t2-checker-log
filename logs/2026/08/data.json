@@ -691,5 +691,18 @@
       "reason_text": "用户已手动确认所有WARN项目"
     },
     "server_timestamp": "2026-08-25T09:07:35.672Z"
+  },
+  {
+    "user_alias": "unknown",
+    "action_type": "check",
+    "client_timestamp": "2026-08-25T09:47:01.335Z",
+    "details": {
+      "booking_id": "AL0-RV2QWHCEMW4QY",
+      "issue_type": "missing_carp",
+      "result": "PASS",
+      "reason": "所有条件满足，可以升级 Missing CARP",
+      "steps_count": 6
+    },
+    "server_timestamp": "2026-08-25T09:47:02.341Z"
   }
 ]
