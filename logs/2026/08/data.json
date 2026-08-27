@@ -848,5 +848,18 @@
       "steps_count": 0
     },
     "server_timestamp": "2026-08-27T06:29:45.029Z"
+  },
+  {
+    "user_alias": "ylliua",
+    "action_type": "check",
+    "client_timestamp": "2026-08-27T06:30:18.979Z",
+    "details": {
+      "booking_id": "AL0-TSYY5KSMKNUUM",
+      "issue_type": "missing_carp",
+      "result": "error",
+      "reason": "getUPAppointment is not defined",
+      "steps_count": 0
+    },
+    "server_timestamp": "2026-08-27T06:30:19.639Z"
   }
 ]
