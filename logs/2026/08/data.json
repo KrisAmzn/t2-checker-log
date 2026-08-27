@@ -874,5 +874,18 @@
       "steps_count": 6
     },
     "server_timestamp": "2026-08-27T06:33:51.538Z"
+  },
+  {
+    "user_alias": "ylliua",
+    "action_type": "check",
+    "client_timestamp": "2026-08-27T06:48:29.706Z",
+    "details": {
+      "booking_id": "AL0-TSYY5KSMKNUUM",
+      "issue_type": "missing_carp",
+      "result": "REJECT",
+      "reason": "未超过RTD+20天 (当前15天)",
+      "steps_count": 6
+    },
+    "server_timestamp": "2026-08-27T06:48:30.843Z"
   }
 ]
