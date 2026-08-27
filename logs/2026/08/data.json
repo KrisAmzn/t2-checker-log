@@ -794,5 +794,21 @@
       "steps_count": 6
     },
     "server_timestamp": "2026-08-26T08:15:35.164Z"
+  },
+  {
+    "user_alias": [
+      "ylliua",
+      "amazon.com"
+    ],
+    "action_type": "check",
+    "client_timestamp": "2026-08-27T05:55:28.377Z",
+    "details": {
+      "booking_id": "AL0-SZECQMRTKEKA6",
+      "issue_type": "unload_delay",
+      "result": "REJECT",
+      "reason": "CARP Arrival距今仅2天 (需>5天)",
+      "steps_count": 6
+    },
+    "server_timestamp": "2026-08-27T05:55:29.144Z"
   }
 ]
