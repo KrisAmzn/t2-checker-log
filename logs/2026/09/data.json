@@ -50,5 +50,18 @@
       "steps_count": 6
     },
     "server_timestamp": "2026-09-02T08:19:44.123Z"
+  },
+  {
+    "user_alias": "ylliua",
+    "action_type": "check",
+    "client_timestamp": "2026-09-02T08:21:37.001Z",
+    "details": {
+      "booking_id": "AL0-VYGWYGS5DXWCK",
+      "issue_type": "unload_delay",
+      "result": "REJECT",
+      "reason": "有Unload Case在3个工作日内关闭",
+      "steps_count": 6
+    },
+    "server_timestamp": "2026-09-02T08:21:37.354Z"
   }
 ]
