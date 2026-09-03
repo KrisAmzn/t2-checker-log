@@ -180,5 +180,18 @@
       "steps_count": 0
     },
     "server_timestamp": "2026-09-03T07:17:43.813Z"
+  },
+  {
+    "user_alias": "ylliua",
+    "action_type": "check",
+    "client_timestamp": "2026-09-03T07:23:39.291Z",
+    "details": {
+      "booking_id": "AL0-W65JHTDZQSQYE",
+      "issue_type": "pull_in",
+      "result": "REJECT",
+      "reason": "未超出SLA",
+      "steps_count": 6
+    },
+    "server_timestamp": "2026-09-03T07:23:40.396Z"
   }
 ]
