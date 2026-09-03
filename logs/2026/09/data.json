@@ -193,5 +193,18 @@
       "steps_count": 6
     },
     "server_timestamp": "2026-09-03T07:23:40.396Z"
+  },
+  {
+    "user_alias": "ylliua",
+    "action_type": "check",
+    "client_timestamp": "2026-09-03T07:29:39.495Z",
+    "details": {
+      "booking_id": "AL0-W65JHTDZQSQYE",
+      "issue_type": "pull_in",
+      "result": "error",
+      "reason": "invalid date",
+      "steps_count": 0
+    },
+    "server_timestamp": "2026-09-03T07:29:40.089Z"
   }
 ]
