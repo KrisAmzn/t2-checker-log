@@ -322,5 +322,18 @@
       "steps_count": 6
     },
     "server_timestamp": "2026-09-03T08:14:00.074Z"
+  },
+  {
+    "user_alias": "ylliua",
+    "action_type": "check",
+    "client_timestamp": "2026-09-03T08:27:57.451Z",
+    "details": {
+      "booking_id": "AL0-W65JHTDZQSQYE",
+      "issue_type": "pull_in",
+      "result": "PASS",
+      "reason": "所有条件满足，可以升级 Pull In",
+      "steps_count": 6
+    },
+    "server_timestamp": "2026-09-03T08:27:58.540Z"
   }
 ]
