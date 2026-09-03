@@ -219,5 +219,18 @@
       "steps_count": 6
     },
     "server_timestamp": "2026-09-03T07:31:20.202Z"
+  },
+  {
+    "user_alias": "ylliua",
+    "action_type": "check",
+    "client_timestamp": "2026-09-03T07:46:03.996Z",
+    "details": {
+      "booking_id": "AL0-W65JHTDZQSQYE",
+      "issue_type": "pull_in",
+      "result": "REJECT",
+      "reason": "已有Open Pull Case且3个工作日内有更新",
+      "steps_count": 6
+    },
+    "server_timestamp": "2026-09-03T07:46:05.178Z"
   }
 ]
