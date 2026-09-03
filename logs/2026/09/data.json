@@ -258,5 +258,18 @@
       "steps_count": 6
     },
     "server_timestamp": "2026-09-03T08:02:05.906Z"
+  },
+  {
+    "user_alias": "ylliua",
+    "action_type": "check",
+    "client_timestamp": "2026-09-03T08:04:46.747Z",
+    "details": {
+      "booking_id": "AL0-W65JHTDZQSQYE",
+      "issue_type": "pull_in",
+      "result": "REJECT",
+      "reason": "Case C12F5403B6A 正在处理中，等待目的港回复",
+      "steps_count": 6
+    },
+    "server_timestamp": "2026-09-03T08:04:47.119Z"
   }
 ]
