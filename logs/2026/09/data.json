@@ -297,5 +297,17 @@
       "steps_count": 6
     },
     "server_timestamp": "2026-09-03T08:13:17.266Z"
+  },
+  {
+    "user_alias": "ylliua",
+    "action_type": "force_escalation",
+    "client_timestamp": "2026-09-03T08:13:47.174Z",
+    "details": {
+      "booking_id": "AL0-W65JHTDZQSQYE",
+      "issue_type": "pull_in",
+      "reason_code": "manual_confirm",
+      "reason_text": "用户已手动确认所有WARN项目"
+    },
+    "server_timestamp": "2026-09-03T08:13:47.511Z"
   }
 ]
